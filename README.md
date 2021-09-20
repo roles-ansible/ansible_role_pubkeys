@@ -68,10 +68,12 @@ admins:
 Alice, Bob and Eve may log in to ther own user accounts via ssh:
 ```
 users:
-  alice:
-    - 'ssh-ed25519 AAA... alice@localhost'
-  eve:
-    - https://github.com/do1jlr.keys
+  - name: alice
+    keys:
+      - 'ssh-ed25519 AAA... alice@localhost'
+  - name: 'eve'
+    keys:
+    - 'https://github.com/do1jlr.keys'
     - 'ssh-ed25519 AAA... eve@localhost'
 ```
 Eve can do so with two different `ssh` keys. Alice only with his only SSH Key.

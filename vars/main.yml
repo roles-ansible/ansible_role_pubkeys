@@ -1,4 +1,4 @@
 ---
-playbook_version_number: 10
+playbook_version_number: 11
 playbook_version_path: 'do1jlr.pubkeys.version'
 restict_ssh_user_access: false
