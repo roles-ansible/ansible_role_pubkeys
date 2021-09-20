@@ -3,15 +3,15 @@
   ansible.builtin.include_tasks: versioncheck.yml
   when: submodules_versioncheck|bool
 
+- name: optionally remove existing ssh keys to make sure you there are no wrong keys
+  ansible.builtin.include_tasks: delete_keys.yml
+  when: manage_all_keys | bool
+
 - name: Setup local users ssh keys
   ansible.builtin.include_tasks: ssh_user.yml
   with_dict: '{{ users }}'
   loop_control:
     loop_var: local_user_data
-
-- name: optionally remove existing ssh keys to make sure you there are no wrong keys
-  ansible.builtin.include_tasks: delete_keys.yml
-  when: manage_all_keys | bool
 
 - name: Setup ssh keys for admin users
   ansible.builtin.include_tasks: ssh_root.yml
