@@ -1,4 +1,4 @@
 ---
-playbook_version_number: 9011
-playbook_version_path: 'users-and-ssh-keys_chaos-bodensee_github.com.version'
+playbook_version_number: 8
+playbook_version_path: 'do1jlr.pubkeys.version'
 restict_ssh_user_access: false

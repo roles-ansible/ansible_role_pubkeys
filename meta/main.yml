@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: auth
+  role_name: pubkeys
   author: do1jlr
   description: Ansible Rolle to manage and deploy ssh keys of admin and non-admin users
   license: "MIT"
