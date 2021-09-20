@@ -69,22 +69,13 @@ Alice, Bob and Eve may log in to ther own user accounts via ssh:
 ```
 users:
   alice:
-    - alice
+    - 'ssh-ed25519 AAA... alice@localhost'
   eve:
-    - eve@device1
-    - eve@device2
+    - https://github.com/do1jlr.keys
+    - 'ssh-ed25519 AAA... eve@localhost'
 ```
 Eve can do so with two different `ssh` keys. Alice only with his only SSH Key.
 
-
-The `files/ssh_public_keys/` contains the following files:
-
-```
-alice_ed25519.pub
-bob_ed25519.pub
-eve@device1_ed25519.pub
-eve@device2_ed25519.pub
-```
 
 Alice, Bob and Eve want to be users on this host:
 ```
@@ -94,15 +85,9 @@ accounts:
   - eve
 ```
 
-Add ssh keys from github user ``DO1JLR`` for local user L3D
-```
-github_users:
-  l3d:
-    - do1jlr
-```
  Generate ed25519 SSH Keys
 --------------------------------
-
+By default, the [do1jlr.sshd](https://github.com/roles-ansible/ansible_role_sshd.git) configure sshd to only allow ed25519 keys to log in. You can use this command to generate ed25519 keys.
 ```bash
 ssh-keygen -t ed25519
 ```

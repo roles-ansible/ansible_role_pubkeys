@@ -1,27 +1,24 @@
 ---
 - name: Extract local and remote user names
   ansible.builtin.set_fact:
-    local_user: '{{ local_user_data.key }}'
-    remote_users: '{{ local_user_data.value }}'
-
-- name: 'Setup .ssh for user {{ local_user }}'
-  become: true
-  ansible.builtin.file:
-    path: '/home/{{ local_user }}/.ssh/'
-    state: directory
-    owner: '{{ local_user }}'
-    group: '{{ local_user }}'
-    mode: 'u=rwx,g=,o='
-  register: created_ssh_user_dir
-  changed_when: created_ssh_user_dir.changed and github_users | length == 0
+    local_user: '{{ local_user_data.name }}'
+    pubkeys: '{{ local_user_data.keys }}'
 
 - name: 'Add ssh keys for user {{ local_user }}'
   become: true
-  ansible.builtin.template:
-    src: authorized_keys.j2
-    dest: '/home/{{ local_user }}/.ssh/authorized_keys'
-    owner: '{{ local_user }}'
-    group: '{{ local_user }}'
-    mode: 'u=rw,g=,o='
-  register: added_ssh_key_4_user
-  changed_when: github_users | length == 0 and added_ssh_key_4_user.changed
+  ansible.posix.authorized_key:
+    user: '{{ local_user }}'
+    state: present
+    key: "{{ item }}"
+  with_items:
+    - "{{ pubkeys }}"
+
+- name: 'Add github ssh keys for user ansible'
+  become: true
+  ansible.posix.authorized_key:
+    user: 'ansible'
+    state: present
+    key: "{{ item }}"
+  with_items:
+    - "{{ pubkeys }}"
+  when: local_user in admins
